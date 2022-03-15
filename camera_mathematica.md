@@ -159,6 +159,7 @@ P^{``}=KP_{C_{z=1}}$$
 > ① 将三维空间点投影到归一化图像平面，投影后的坐标为$[x,y]^T$   
 > ② 对归一化平面上的点计算径向畸变和切向畸变
 > $$
+>    \tag{5.1}
 >    \left\{
 >        \begin{aligned}
 >            x_{distorted}&=x(1+k_1r^2+k_2r^4+k_3r^6)+2p_1xy+p_2(r^2+2x^2)\\
@@ -168,6 +169,7 @@ P^{``}=KP_{C_{z=1}}$$
 >  $$
 > ③ 将畸变校正后的点左乘内参矩阵投影到像素平面:
 > $$
+>   \tag{5.2}
 >   \begin{bmatrix}
 >       x_p\\
 >       y_p 
@@ -190,9 +192,23 @@ P^{``}=KP_{C_{z=1}}$$
     R&t\\0^T&1
 \end{bmatrix}$描述，并有$\boldsymbol{T}\in SE(3)$，则有相机坐标系的估计点:
 $$
+    \tag{6.1}
     \widetilde{P}_C=TP_W=RP_W+t
 $$
 ③ 这时的$\widetilde{P}_c=(X,Y,Z)$,投影到归一化平面$Z=1$上，得到$P$的归一化坐标$P_C=[X/Z,Y/Z,1]^T$    
 ④ 对归一化坐标$[X/Z,Y/Z]$畸变矫正得:$\rightarrow[x_{distorted},y_{distorted}]^T$    
 ⑤ 畸变校正后的坐标左乘内参矩阵，得像素坐标:
 $$[x,y]^T=K[x_{distorted},y_{distorted}]^T$$
+
+## 7. 双目相机成像、测距及重建机理
+* 双目相机几何原理    
+![Chart](./双目相机几何原理.png)
+根据三角形相似关系有:
+$$\frac{z-f}{z}=\frac{b-u_L+u_R}{b}$$
+
+整理得:
+$$z=\frac{fb}{d}$$
+
+> 式中:    
+> $d=u_L-u_R$(左右图的横坐标之差)    
+> $b$：基线长度
